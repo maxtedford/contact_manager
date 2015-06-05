@@ -45,4 +45,10 @@ describe 'the person view', type: :feature do
     expect(page).to have_content("555-1919")
     expect(page).to_not have_content(old_number)
   end
+  
+  it "has a link to delete the phone number" do
+    person.phone_numbers.each do |p_n|
+      expect(page).to have_link("Delete", href: phone_number_path(p_n))
+    end
+  end
 end
