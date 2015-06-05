@@ -6,11 +6,11 @@ RSpec.describe EmailAddressesController, type: :controller do
   # EmailAddress. As you add validations to EmailAddress, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    { address: "abc@abc.com" }
+    { address: "abc@abc.com", person_id: 1 }
   }
 
   let(:invalid_attributes) {
-    { address: nil }
+    { address: nil, person_id: nil }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -85,18 +85,16 @@ RSpec.describe EmailAddressesController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       
-      let(:valid_addributes) {
-        { address: "abc@abc.com" }
-      }
-      let(:new_attributes) {
-        { address: "xyz@xyz.com" }
-      }
-
+      let(:bob) { Person.create(first_name: "Bob", last_name: "Jones")}
+      let(:valid_addributes) { { address: "abc@abc.com", person_id: bob.id } }
+      let(:new_attributes) { { address: "xyz@xyz.com", person_id: bob.id } }
+      
       it "updates the requested email_address" do
         email_address = EmailAddress.create! valid_attributes
         put :update, {:id => email_address.to_param, :email_address => new_attributes}, valid_session
         email_address.reload
         expect(email_address.address).to eq("xyz@xyz.com")
+        expect(email_address.person.first_name).to eq("Bob")
       end
 
       it "assigns the requested email_address as @email_address" do
