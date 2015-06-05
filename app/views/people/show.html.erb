@@ -14,8 +14,15 @@
   <strong><%= @person.first_name %>'s phone numbers:</strong>
   <ol>
     <% @person.phone_numbers.each do |p_n| %>
-      <li><%= p_n.number %> <%= link_to "Edit", edit_phone_number_path(p_n) %> | <%= link_to "Delete", phone_number_path(p_n), method: :delete %></li>
+      <li><%= p_n.number %> 
+        <br>
+        <br>
+        <%= link_to "Edit Phone Number", edit_phone_number_path(p_n) %> |
+        <%= link_to "Delete Phone Number", phone_number_path(p_n), method: :delete %>
+      </li>
     <% end %>
+    <br>
+    <%= link_to "New Phone Number", new_phone_number_path(person_id: @person.id) %>
   </ol>
 </p>
 
@@ -23,11 +30,15 @@
   <strong><%= @person.first_name %>'s email addresses:</strong>
   <ul>
     <% @person.email_addresses.each do |email| %>
-      <li><%= email.address %></li>
-    <% end %>
+      <li><%= email.address %> 
+        <br>
+        <br>
+      </li>
+  <% end %>
+    <br>
+    <%= link_to "New Email Address", new_email_address_path(person_id: @person.id) %>
   </ul>
 </p>
 
-<%= link_to 'New', new_phone_number_path(person_id: @person.id) %> |
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>

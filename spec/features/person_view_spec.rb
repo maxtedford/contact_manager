@@ -17,11 +17,11 @@ describe 'phone number', type: :feature do
   end
   
   it "has a link to add a new phone number" do
-    expect(page).to have_link("New", href: new_phone_number_path(person_id: person.id))
+    expect(page).to have_link("New Phone Number", href: new_phone_number_path(person_id: person.id))
   end
   
   it "adds a new phone number" do
-    page.click_link("New")
+    page.click_link("New Phone Number")
     page.fill_in("Number", with: "555-8888")
     page.click_button("Create Phone number")
     expect(current_path).to eq(person_path(person))
@@ -30,7 +30,7 @@ describe 'phone number', type: :feature do
   
   it "has links to edit phone numbers" do
     person.phone_numbers.each do |p_n|
-      expect(page).to have_link("Edit", href: edit_phone_number_path(p_n))
+      expect(page).to have_link("Edit Phone Number", href: edit_phone_number_path(p_n))
     end
   end
   
@@ -38,7 +38,7 @@ describe 'phone number', type: :feature do
     phone = person.phone_numbers.first
     old_number = phone.number
     
-    first(:link, "Edit").click
+    first(:link, "Edit Phone Number").click
     page.fill_in("Number", with: "555-1919")
     page.click_button("Update Phone number")
     expect(current_path).to eq(person_path(person))
@@ -48,14 +48,14 @@ describe 'phone number', type: :feature do
   
   it "has a link to delete the phone number" do
     person.phone_numbers.each do |p_n|
-      expect(page).to have_link("Delete", href: phone_number_path(p_n))
+      expect(page).to have_link("Delete Phone Number", href: phone_number_path(p_n))
     end
   end
 end
 
-describe 'phone number', type: :feature do
-  
-  let(:person) { Person.create(first_name: "Jane", last_name: "Doe") }
+describe 'email address', type: :feature do
+
+  let(:person) { Person.create(first_name: "John", last_name: "Doe") }
   
   before(:each) do
     person.email_addresses.create(address: "abc@abc.com")
@@ -66,5 +66,18 @@ describe 'phone number', type: :feature do
   it "displays each email address as a list item" do
     expect(page).to have_selector("li", text: "abc@abc.com")
     expect(page).to have_selector("li", text: "xyz@xyz.com")
+  end
+  
+  it "has a new email address link" do
+    expect(page).to have_link("New", href: new_email_address_path(person_id: person.id))
+    expect(current_path).to eq(person_path(person))
+  end
+  
+  it "can add a new email address" do
+    page.click_link("New Email Address")
+    page.fill_in("Address", with: "boom@nailedit.com")
+    page.click_button("Create Email address")
+    expect(current_path).to eq(person_path(person))
+    expect(page).to have_content("boom@nailedit.com")
   end
 end
