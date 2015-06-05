@@ -19,6 +19,15 @@
   </ol>
 </p>
 
+<p>
+  <strong><%= @person.first_name %>'s email addresses:</strong>
+  <ul>
+    <% @person.email_addresses.each do |email| %>
+      <li><%= email.address %></li>
+    <% end %>
+  </ul>
+</p>
+
 <%= link_to 'New', new_phone_number_path(person_id: @person.id) %> |
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>
