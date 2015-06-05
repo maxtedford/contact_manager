@@ -14,7 +14,7 @@
   <strong><%= @person.first_name %>'s phone numbers:</strong>
   <ol>
     <% @person.phone_numbers.each do |p_n| %>
-      <li><%= p_n.number %></li>
+      <li><%= p_n.number %> <%= link_to "Edit", edit_phone_number_path(p_n) %></li>
     <% end %>
   </ol>
 </p>
