@@ -80,4 +80,10 @@ describe 'email address', type: :feature do
     expect(current_path).to eq(person_path(person))
     expect(page).to have_content("boom@nailedit.com")
   end
+  
+  it "has links to edit the email addresses" do
+    person.email_addresses.each do |email_address|
+      expect(page).to have_link("Edit Email Address", href: edit_email_address_path(email_address))
+    end
+  end
 end
