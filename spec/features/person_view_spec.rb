@@ -86,4 +86,15 @@ describe 'email address', type: :feature do
       expect(page).to have_link("Edit Email Address", href: edit_email_address_path(email_address))
     end
   end
+  
+  it "edits an email address" do
+    email = person.email_addresses.first
+    old_email = email.address
+    
+    first(:link, "Edit Email Address").click
+    page.fill_in("Address", with: "newemail@email.com")
+    page.click_button("Update Email address")
+    expect(current_path).to eq(person_path(person))
+    expect(page).to_not have_content(old_email)
+  end
 end
